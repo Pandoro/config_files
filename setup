@@ -5,12 +5,12 @@ then
 	echo ".zshrc already exists in your home folder. Remove it first." 
 	return 1
 else 
-	ln -s zshrc ~/.zshrc 
+	ln -s $(readlink -en $(dirname $0)/zshrc) ~/.zshrc 
 fi
 if [ -f ~/.vimrc ]; 
 then
 	echo ".vimrc already exists in your home folder. Remove it first." 
 	return 1
 else 
-	ln -s vimrc ~/.vimrc 
+	ln -s $(readlink -en $(dirname $0)/zshrc) ~/.vimrc 
 fi
