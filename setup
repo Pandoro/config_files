@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+if [ -f ~/.zshrc ]; 
+then
+	echo ".zshrc already exists in your home folder. Remove it first." 
+	return 1
+else 
+	ln -s zshrc ~/.zshrc 
+fi
+if [ -f ~/.vimrc ]; 
+then
+	echo ".vimrc already exists in your home folder. Remove it first." 
+	return 1
+else 
+	ln -s vimrc ~/.vimrc 
+fi
