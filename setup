@@ -12,5 +12,5 @@ then
 	echo ".vimrc already exists in your home folder. Remove it first." 
 	return 1
 else 
-	ln -s $(readlink -en $(dirname $0)/zshrc) ~/.vimrc 
+	ln -s $(readlink -en $(dirname $0)/vimrc) ~/.vimrc 
 fi
