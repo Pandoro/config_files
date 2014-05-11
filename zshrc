@@ -1,10 +1,4 @@
-# -*- shell-script -*-
-# 
-# anrxc's init file for Z-SHELL 4.3.10 on Arch GNU/Linux.
-
-# {{{ User settings
-
-# {{{ Environment
+# Environment
 export TERM="rxvt"
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
@@ -17,15 +11,12 @@ export EDITOR="${VISUAL}"
 export VIEWER="xpdf"
 export BROWSER="firefox"
 export XTERM="urxvt"
-# }}}
 
-# {{{ Dircolors
-#     - with rxvt-256color support
-eval `dircolors -b "${HOME}/.dir_colors"`
-# }}}
+#  Dircolors Disabled for now. But maybe later?
+#eval `dircolors -b "${HOME}/.dir_colors"`
 
-# {{{ Manual pages
-#     - colorize, since man-db fails to do so
+# Manual pages
+# - colorize, since man-db fails to do so
 export LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
 export LESS_TERMCAP_md=$'\E[01;31m'   # begin bold
 export LESS_TERMCAP_me=$'\E[0m'       # end mode
@@ -33,74 +24,37 @@ export LESS_TERMCAP_se=$'\E[0m'       # end standout-mode
 export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
-# }}}
+#
 
-# {{{ Aliases
 
-# {{{ Main
+
+# Aliases
 alias open="gnome-open"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ls="ls -aF --color=always"
 alias ll="ls -l"
-alias lfi="ls -l | egrep -v '^d'"
-alias ldi="ls -l | egrep '^d'"
-alias lst="ls -htl | grep `date +%Y-%m-%d`"
 alias grep="grep --color=always"
 alias cp="cp -ia"
 alias mv="mv -i"
 alias rm="rm -i"
-alias cls="clear"
-alias upmem="ps -eo pmem,pcpu,rss,vsize,args | sort -k 1"
 alias top="htop"
-alias psg="ps auxw | grep -i "
-alias psptree="ps auxwwwf"
 alias df="df -hT"
 alias du="du -hc"
-alias dus="du -S | sort -n"
-alias free="free -m"
 alias su="su - "
-alias x="startx &! logout"
-alias rehash="hash -r"
-alias eject="eject -v "
-alias retract="eject -t -v "
-alias vuser="fuser -v "
 alias ping="ping -c 5"
-alias more="less"
-alias mc=". /usr/share/mc/bin/mc-wrapper.sh -x"
-alias links="links ${HOME}/.links/startpage.html"
-alias play="play -v"
-alias xtr="extract"
-alias last='last -adn 10'
 alias screen="screen -U -l"
-alias scr="screen -r"
-alias scd="screen -rd"
-alias sat="date +%R"
-alias bat="acpitool -b"
 alias calc="bc -l <<<"
-alias iodrag="ionice -c3 nice -n19"
-alias spell="aspell -a <<< "
-alias gpgd="gpg2 --decrypt"
-alias gpge="gpg2 -ear anrxc"
-alias passgen="< /dev/urandom tr -cd \[:graph:\] | fold -w 32 | head -n 5"
-alias keyshare="synergys -f --config /etc/synergy.conf"
-alias xpop="xprop | grep --color=none 'WM_CLASS\|^WM_NAME' | xmessage -file -"
-# }}}
 
-
-# }}}
-
-
-# {{{ ZSH settings
-#setopt vim
+# ZSH settings
 setopt nohup
 setopt autocd
 setopt cdablevars
 setopt nobgnice
 setopt nobanghist
 setopt clobber
-setopt shwordsplit
-setopt interactivecomments
+#setopt shwordsplit
+#setopt interactivecomments
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt histreduceblanks histignorespace inc_append_history
 
@@ -301,6 +255,39 @@ source /opt/ros/hydro/setup.zsh
 # Ros Catkin ws. 
 source ~/catkin_ws/devel/setup.zsh
 
+
+
+_JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_AWT_WM_NONREPARENTING
+
+export PATH=$PATH:/usr/local/MATLAB/R2012a/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
+
+export MATLAB_JAVA=/usr/lib/jvm/java-6-openjdk/jre
+
+export ALTERNATE_EDITOR=""
+export LC_ALL="en_US.utf8"
+
+
+SVN_SSH="ssh -i /home/alex/.ssh/id_rsa"
+
+
+
+#### ROS
+#source /opt/ros/groovy/setup.zsh
+#source /home/alex/catkin_ws/devel/setup.zsh
+#export ROS_PACKAGE_PATH=/home/alex/projects/rovina-dev/uniroma/ros_packages:${ROS_PACKAGE_PATH}
+
+source /opt/ros/hydro/setup.zsh
+source /home/alex/work/strands/catkin_ws/devel/setup.zsh
+
+
+
+
+
+
 function my_fetchit {
     command -v curl > /dev/null 2>&1
     if [ $? = 0 ] ; then
@@ -334,3 +321,10 @@ function my_mkenv {
 alias mkenv=my_mkenv
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# Used to darken the backlight beyond the minimum value. 
+function nightmode {
+  sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+  echo ${1:-"30"} > /sys/class/backlight/intel_backlight/brightness
+  sudo chmod o-w /sys/class/backlight/intel_backlight/brightness
+}
