@@ -10,45 +10,41 @@ let g:airline_powerline_fonts = 1
 let g:gitgutter_sign_column_always = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set my colorscheme
-colorscheme basic
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle setup
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required!
+Plugin 'gmarik/vundle'
 
 " The bundles to be installed:
 
 " Status bar
-Bundle 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 "Git plugin
-Bundle 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 "Directory tree
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 "Maps autocompletion to the tab key
-"Bundle 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 "Shows git diff in the sidebar.
-Bundle 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 "Markdown support
-Bundle 'plasticboy/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
     
 
 "Jedi vim for auto completion... it's not the best but what can one do.
-"Bundle 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 "Some python specific things. It includes a lot but here it is only configured
 "for syntax highlighting and pylint.
-"Bundle 'klen/python-mode'
+"Plugin 'klen/python-mode'
 
+call vundle#end()
 filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

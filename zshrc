@@ -79,7 +79,7 @@ zstyle ":completion:*:*:kill:*:processes" list-colors "=(#b) #([0-9]#)*=0=01;32"
 #  * Don't select parent dir on cd
 #zstyle ":completion:*:cd:*" ignore-parents parent pwd
 #  * Complete with colors
-zstyle ":completion:*" list-colors ""
+zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}
 # }}}
 
 
@@ -207,7 +207,7 @@ function setprompt () {
 $PR_SHIFT_OUT($PR_GREEN%(!.%SROOT%s.%n)$PR_GREEN@%m$PR_WHITE:$PR_YELLOW%*$PR_GREEN)\
 $PR_SHIFT_IN$PR_HBAR$PR_HBAR$PR_HBAR$PR_SHIFT_OUT(\
 $PR_RED%$PR_PWDLEN<...<%~%<<$PR_GREEN)$PR_SHIFT_IN$PR_HBAR$PR_HBAR${(e)PR_FILLBAR}$PR_GREEN$PR_HBAR$PR_SHIFT_OUT\
-$PR_RED${VIRTUAL_ENV_NAME}$PR_GREEN\
+$PR_BLUE${VIRTUAL_ENV_NAME}$PR_GREEN\
 $PR_SHIFT_IN$PR_HBAR$PR_GREEN$PR_URCORNER$PR_SHIFT_OUT\
 
 $PR_GREEN$PR_SHIFT_IN$PR_LLCORNER$PR_GREEN$PR_HBAR$PR_SHIFT_OUT(\
@@ -224,70 +224,54 @@ setprompt
 # }}}
 #
 
+# Whut is this ^^?
+export ALTERNATE_EDITOR=""
+export LC_ALL="en_US.utf8"
 
+
+
+############ Work stuff ############
 export PATH=/usr/local/MATLAB/R2012a/bin:/opt/matlab.2012a/bin:$PATH 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 export LD_LIBRARY_PATH=${HOME}/libraries/usr/lib:$LD_LIBRARY_PATH
 export PATH=${HOME}/libraries/usr/bin:$PATH
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
-
 export LD_PRELOAD=/lib/x86_64-linux-gnu/libc.so.6:/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/lib/x86_64-linux-gnu/libgcc_s.so.1;
-
-export ALTERNATE_EDITOR=""
-export LC_ALL="en_US.utf8"
-
-# Added to use the .ccache file
-export PATH="/usr/lib/ccache/bin/:$PATH"
 
 #cuda stuff
 export PATH=/usr/local/cuda/bin:$PATH
 
-source /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh quiet
-source /opt/intel_csxe_2013/bin/compilervars.sh intel64
-
-# Ros Groovy 
-#source /opt/ros/groovy/setup.zsh
+# intel vtune profiler
+[ -f /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh ] && source /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh quiet
+[ -f /opt/intel_csxe_2013/bin/compilervars.sh ] && source /opt/intel_csxe_2013/bin/compilervars.sh intel64
 
 # Ros Hydro
-source /opt/ros/hydro/setup.zsh
+[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
+
+# Ros Indigo
+[ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
 
 # Ros Catkin ws. 
-source ~/catkin_ws/devel/setup.zsh
+[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
 
+# Rovina catkin
+[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
 
-
+#God knows what this is?
 _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_AWT_WM_NONREPARENTING
-
 export PATH=$PATH:/usr/local/MATLAB/R2012a/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
-
 export MATLAB_JAVA=/usr/lib/jvm/java-6-openjdk/jre
 
-export ALTERNATE_EDITOR=""
-export LC_ALL="en_US.utf8"
 
 
-SVN_SSH="ssh -i /home/alex/.ssh/id_rsa"
+################## Useful stuff :D ########################
 
-
-
-#### ROS
-#source /opt/ros/groovy/setup.zsh
-#source /home/alex/catkin_ws/devel/setup.zsh
-#export ROS_PACKAGE_PATH=/home/alex/projects/rovina-dev/uniroma/ros_packages:${ROS_PACKAGE_PATH}
-
-source /opt/ros/hydro/setup.zsh
-source /home/alex/work/strands/catkin_ws/devel/setup.zsh
-
-
-
-
-
-
+# Virtual env
 function my_fetchit {
     command -v curl > /dev/null 2>&1
     if [ $? = 0 ] ; then
@@ -320,6 +304,7 @@ function my_mkenv {
 
 alias mkenv=my_mkenv
 
+#For getting a nice prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Used to darken the backlight beyond the minimum value. 
@@ -328,3 +313,8 @@ function nightmode {
   echo ${1:-"30"} > /sys/class/backlight/intel_backlight/brightness
   sudo chmod o-w /sys/class/backlight/intel_backlight/brightness
 }
+
+
+#Up and down search
+[[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"    history-beginning-search-backward
+[[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}"  history-beginning-search-forward

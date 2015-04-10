@@ -1,16 +1,16 @@
 #!/bin/zsh
+#Link to zsh config
+ln -s -f $(readlink -en $(dirname $0)/zshrc) ~/.zshrc 
 
-if [ -f ~/.zshrc ]; 
-then
-	echo ".zshrc already exists in your home folder. Remove it first." 
-	return 1
-else 
-	ln -s $(readlink -en $(dirname $0)/zshrc) ~/.zshrc 
-fi
-if [ -f ~/.vimrc ]; 
-then
-	echo ".vimrc already exists in your home folder. Remove it first." 
-	return 1
-else 
-	ln -s $(readlink -en $(dirname $0)/vimrc) ~/.vimrc 
-fi
+#Link to vim config
+ln -s -f $(readlink -en $(dirname $0)/vimrc) ~/.vimrc 
+
+#Install Vundle, after this is done, open vim and run :PluginInstall
+[ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+#Configure the gnome terminal for vim airline
+wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf'
+#TODO install the font... 
+rm -rf DejaVu\ Sans\ Mono\ for\ Powerline.ttf  
+ln -s -f $(readlink -en $(dirname $0)/%gconf.xml) ~/.gconf/apps/gnome-terminal/profiles/Default/%gconf.xml
