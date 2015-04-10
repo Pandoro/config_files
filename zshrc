@@ -1,5 +1,5 @@
 # Environment
-export TERM="rxvt"
+#export TERM="rxvt"
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
@@ -24,18 +24,17 @@ export LESS_TERMCAP_se=$'\E[0m'       # end standout-mode
 export LESS_TERMCAP_so=$'\E[1;33;40m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'       # end underline
 export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
-#
-
 
 
 # Aliases
+alias less="/usr/share/vim/vim73/macros/less.sh"
 alias open="gnome-open"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ls="ls -aF --color=always"
 alias ll="ls -l"
 alias grep="grep --color=always"
-alias cp="cp -ia"
+#alias cp="cp -ia"
 alias mv="mv -i"
 alias rm="rm -i"
 alias top="htop"
@@ -229,9 +228,8 @@ export ALTERNATE_EDITOR=""
 export LC_ALL="en_US.utf8"
 
 
-
 ############ Work stuff ############
-export PATH=/usr/local/MATLAB/R2012a/bin:/opt/matlab.2012a/bin:$PATH 
+export PATH=/usr/local/MATLAB/R2013b/bin:/opt/matlab.2013b/bin:$PATH 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 export LD_LIBRARY_PATH=${HOME}/libraries/usr/lib:$LD_LIBRARY_PATH
@@ -261,7 +259,6 @@ export PATH=/usr/local/cuda/bin:$PATH
 #God knows what this is?
 _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_AWT_WM_NONREPARENTING
-export PATH=$PATH:/usr/local/MATLAB/R2012a/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
@@ -315,6 +312,46 @@ function nightmode {
 }
 
 
-#Up and down search
+
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -A key
+
+key[Home]=${terminfo[khome]}
+
+key[End]=${terminfo[kend]}
+key[Insert]=${terminfo[kich1]}
+key[Delete]=${terminfo[kdch1]}
+key[Up]=${terminfo[kcuu1]}
+key[Down]=${terminfo[kcud1]}
+key[Left]=${terminfo[kcub1]}
+key[Right]=${terminfo[kcuf1]}
+key[PageUp]=${terminfo[kpp]}
+key[PageDown]=${terminfo[knp]}
+
+# setup key accordingly
+[[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
+[[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
+[[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
+[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
+[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-history
+[[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
+[[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"    history-beginning-search-backward
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}"  history-beginning-search-forward
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-line-init () {
+        printf '%s' "${terminfo[smkx]}"
+    }
+    function zle-line-finish () {
+        printf '%s' "${terminfo[rmkx]}"
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
+
+
+
