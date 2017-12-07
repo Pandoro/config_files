@@ -2,7 +2,7 @@
 " Airline setup
 set laststatus=2
 set t_Co=256
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -36,7 +36,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 "Markdown support
 Plugin 'plasticboy/vim-markdown'
-    
+
 
 "Jedi vim for auto completion... it's not the best but what can one do.
 "Plugin 'davidhalter/jedi-vim'
@@ -69,7 +69,7 @@ set shiftwidth=4
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-mode
-" Disable rope as jedi mode is used for auto completetion
+" Disable rope as jedi mode is used for auto completion
 let g:pymode_rope = 0
 
 " Documentation
@@ -107,30 +107,12 @@ set autochdir
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Allow mouse clicks in all modes and make it copyable with ctrl+c
-set mouse=a
-set paste
-vmap <C-C> "+y
+" Use relative line numbers per default
+set number relativenumber
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use relative line numbers per default 
-set relativenumber
-
-"Allow to change using <C-l>
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
-
-nnoremap <C-l> :call NumberToggle()<cr>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Markdown plugin settings. 
-" No folding. 
+" Markdown plugin settings.
+" No folding.
 let g:vim_markdown_initial_foldlevel=5
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

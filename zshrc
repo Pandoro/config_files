@@ -27,7 +27,6 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 
 
 # Aliases
-alias less="/usr/share/vim/vim73/macros/less.sh"
 alias open="gnome-open"
 alias ..="cd .."
 alias ...="cd ../.."
@@ -41,9 +40,13 @@ alias top="htop"
 alias df="df -hT"
 alias du="du -hc"
 alias su="su - "
-alias ping="ping -c 5"
 alias screen="screen -U -l"
 alias calc="bc -l <<<"
+alias matlab=/opt/matlab.2016b/bin/matlab
+alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
+
+# Colossus aliases
+alias scancel="scancel --signal=SIGTERM"
 
 # ZSH settings
 setopt nohup
@@ -229,16 +232,28 @@ export LC_ALL="en_US.utf8"
 
 
 ############ Work stuff ############
-export PATH=/usr/local/MATLAB/R2013b/bin:/opt/matlab.2013b/bin:$PATH 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
-export LD_LIBRARY_PATH=${HOME}/libraries/usr/lib:$LD_LIBRARY_PATH
-export PATH=${HOME}/libraries/usr/bin:$PATH
-export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
-export LD_PRELOAD=/lib/x86_64-linux-gnu/libc.so.6:/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/lib/x86_64-linux-gnu/libgcc_s.so.1;
 
 #cuda stuff
-export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/extras/CUPTI/lib64
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+export CPATH=$CPATH:/usr/local/cuda-8.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-7.5/lib64
+#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-7.5/lib64
+#export CPATH=$CPATH:/usr/local/cuda-7.5/lib64
+
+
+#cudnn from home
+#export LD_LIBRARY_PATH=~/cudnn/cudnn5.1/lib64:$LD_LIBRARY_PATH
+#export CPATH=~/cudnn/cudnn5.1/include:$CPATH
+#export LIBRARY_PATH=~/cudnn/cudnn5.1/lib64:$LIBRARY_PATH
+
+export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
+export CPATH=~/cudnn/cudnn6.0/include:$CPATH
+export LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LIBRARY_PATH
+
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 
 # intel vtune profiler
 [ -f /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh ] && source /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh quiet
@@ -251,21 +266,15 @@ export PATH=/usr/local/cuda/bin:$PATH
 [ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
 
 # Ros Catkin ws. 
-[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
+#[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
 
 # Rovina catkin
-[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
+#[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
+#[ -f /work/hermans/rovina/catkin_ws/devel/setup.zsh ] && source /work/hermans/rovina/catkin_ws/devel/setup.zsh
+#export ROVINA_DEV=/work/hermans/rovina/catkin_ws/src/rovina-dev/
 
-#God knows what this is?
-_JAVA_AWT_WM_NONREPARENTING=1
-export _JAVA_AWT_WM_NONREPARENTING
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
-export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig
-export MATLAB_JAVA=/usr/lib/jvm/java-6-openjdk/jre
-
-
-
+# Strands catkin
+[ -f /work/hermans/strands/catkin/devel/setup.zsh ] && source /work/hermans/strands/catkin/devel/setup.zsh
 ################## Useful stuff :D ########################
 
 # Virtual env
@@ -287,7 +296,7 @@ function my_mkenv {
     py=${2:-"python"}
     if [ "$3" = "--sys" ]; then opts="--system-site-packages"; fi
 
-    version="1.10.1"
+    version="15.0.1"
 
     my_fetchit https://pypi.python.org/packages/source/v/virtualenv/virtualenv-$version.tar.gz || return 1
     tar xzC /tmp < virtualenv-$version.tar.gz || return 1
@@ -352,6 +361,5 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
-
 
 

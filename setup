@@ -1,16 +1,21 @@
 #!/bin/zsh
-#Link to zsh config
-ln -s -f $(readlink -en $(dirname $0)/zshrc) ~/.zshrc 
 
-#Link to vim config
-ln -s -f $(readlink -en $(dirname $0)/vimrc) ~/.vimrc 
+# Link to the zsh config
+ln -s -f $(readlink -en $(dirname $0)/zshrc) ~/.zshrc
 
-#Install Vundle, after this is done, open vim and run :PluginInstall
+# Link to the vim config
+ln -s -f $(readlink -en $(dirname $0)/vimrc) ~/.vimrc
+
+# Install Vundle and all plugins
 [ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 
-#Configure the gnome terminal for vim airline
-wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf'
-#TODO install the font... 
-rm -rf DejaVu\ Sans\ Mono\ for\ Powerline.ttf  
-ln -s -f $(readlink -en $(dirname $0)/%gconf.xml) ~/.gconf/apps/gnome-terminal/profiles/Default/%gconf.xml
+# Download a font needed for airline.
+wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' \
+    -O ~/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.ttf
+fc-cache -f ~/.fonts
+
+# Configure terminator with the font and set it as default
+ln -s -f $(readlink -en $(dirname $0)/terminator_config) ~/.config/terminator/config
+gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
