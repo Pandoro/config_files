@@ -20,3 +20,10 @@ fc-cache -f ~/.fonts
 # Configure terminator with the font and set it as default
 ln -s -f $(readlink -en $(dirname $0)/terminator_config) ~/.config/terminator/config
 gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
+
+# Setup some git defaults
+ln -s -f $(readlink -en $(dirname $0)/gitignore_global) ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
+git config --global user.name "Alexander Hermans"
+git config --global user.email "Alexander.Hermans0@gmail.com"
+git config --global push.default "matching"
