@@ -27,7 +27,7 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 
 
 # Aliases
-alias open="gnome-open"
+alias open="xdg-open"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ls="ls -aF --color=always"
@@ -44,9 +44,6 @@ alias screen="screen -U -l"
 alias calc="bc -l <<<"
 alias matlab=/opt/matlab.2016b/bin/matlab
 alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
-
-# Colossus aliases
-alias scancel="scancel --signal=SIGTERM"
 
 # ZSH settings
 setopt nohup
@@ -235,46 +232,28 @@ export LC_ALL="en_US.utf8"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 #cuda stuff
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/extras/CUPTI/lib64
-export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-8.0/lib64
-export CPATH=$CPATH:/usr/local/cuda-8.0/lib64
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-7.5/lib64
-#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-7.5/lib64
-#export CPATH=$CPATH:/usr/local/cuda-7.5/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/extras/CUPTI/lib64
+#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+#export CPATH=$CPATH:/usr/local/cuda-8.0/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.0/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.0/extras/CUPTI/lib64
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-9.0/lib64
+export CPATH=$CPATH:/usr/local/cuda-9.0/lib64
 
 
 #cudnn from home
-#export LD_LIBRARY_PATH=~/cudnn/cudnn5.1/lib64:$LD_LIBRARY_PATH
-#export CPATH=~/cudnn/cudnn5.1/include:$CPATH
-#export LIBRARY_PATH=~/cudnn/cudnn5.1/lib64:$LIBRARY_PATH
+#export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
+#export CPATH=~/cudnn/cudnn6.0/include:$CPATH
+#export LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LIBRARY_PATH
+export LD_LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LD_LIBRARY_PATH
+export CPATH=~/cudnn/cudnn7.0/include:$CPATH
+export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
 
-export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
-export CPATH=~/cudnn/cudnn6.0/include:$CPATH
-export LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LIBRARY_PATH
+# Setup Conda
+source /home/hermans/anaconda3/etc/profile.d/conda.sh
 
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
 
-# intel vtune profiler
-[ -f /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh ] && source /opt/intel_csxe_2013/vtune_amplifier_xe_2013/amplxe-vars.sh quiet
-[ -f /opt/intel_csxe_2013/bin/compilervars.sh ] && source /opt/intel_csxe_2013/bin/compilervars.sh intel64
-
-# Ros Hydro
-[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
-
-# Ros Indigo
-[ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
-
-# Ros Catkin ws. 
-#[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
-
-# Rovina catkin
-#[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
-#[ -f /work/hermans/rovina/catkin_ws/devel/setup.zsh ] && source /work/hermans/rovina/catkin_ws/devel/setup.zsh
-#export ROVINA_DEV=/work/hermans/rovina/catkin_ws/src/rovina-dev/
-
-# Strands catkin
-[ -f /work/hermans/strands/catkin/devel/setup.zsh ] && source /work/hermans/strands/catkin/devel/setup.zsh
 ################## Useful stuff :D ########################
 
 # Virtual env
