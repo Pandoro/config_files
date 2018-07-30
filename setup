@@ -12,6 +12,7 @@ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
 # Download a font needed for airline.
+mkdir -p ~/.fonts
 wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' \
     -O ~/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.ttf
 fc-cache -f ~/.fonts
