@@ -132,17 +132,24 @@ function precmd {
     PR_PWDLEN=""
     local PROMPTSIZE="${#${(%):---(%n@%m:%*)---()--}}"
     local PWDSIZE="${#${(%):-%~}}"
-    if [ -n "$VIRTUAL_ENV" ]; 
+    if [ -n "$VIRTUAL_ENV" ];
     then
         VIRTUAL_ENV_NAME="(`basename $VIRTUAL_ENV`)"
     else
         VIRTUAL_ENV_NAME=""
     fi
+    if [ -n "$CONDA_DEFAULT_ENV" ];
+    then
+        CONDA_ENV_NAME="(`basename $CONDA_DEFAULT_ENV`)"
+    else
+        CONDA_ENV_NAME=""
+    fi
     local VIRTUAL_ENV_SIZE=${#VIRTUAL_ENV_NAME}
+    local CONDA_ENV_SIZE=${#CONDA_ENV_NAME}
     if [[ "${PROMPTSIZE} + ${PWDSIZE}" -gt ${TERMWIDTH} ]]; then
 	((PR_PWDLEN=${TERMWIDTH} - ${PROMPTSIZE}))
     else
-        PR_FILLBAR="\${(l.((${TERMWIDTH} - (${PROMPTSIZE} + ${PWDSIZE} + ${VIRTUAL_ENV_SIZE} )))..${PR_HBAR}.)}"
+        PR_FILLBAR="\${(l.((${TERMWIDTH} - (${PROMPTSIZE} + ${PWDSIZE} + ${VIRTUAL_ENV_SIZE} + ${CONDA_ENV_SIZE})))..${PR_HBAR}.)}"
     fi
 }
 
@@ -207,6 +214,7 @@ $PR_SHIFT_OUT($PR_GREEN%(!.%SROOT%s.%n)$PR_GREEN@%m$PR_WHITE:$PR_YELLOW%*$PR_GRE
 $PR_SHIFT_IN$PR_HBAR$PR_HBAR$PR_HBAR$PR_SHIFT_OUT(\
 $PR_RED%$PR_PWDLEN<...<%~%<<$PR_GREEN)$PR_SHIFT_IN$PR_HBAR$PR_HBAR${(e)PR_FILLBAR}$PR_GREEN$PR_HBAR$PR_SHIFT_OUT\
 $PR_BLUE${VIRTUAL_ENV_NAME}$PR_GREEN\
+$PR_RED${CONDA_ENV_NAME}$PR_GREEN\
 $PR_SHIFT_IN$PR_HBAR$PR_GREEN$PR_URCORNER$PR_SHIFT_OUT\
 
 $PR_GREEN$PR_SHIFT_IN$PR_LLCORNER$PR_GREEN$PR_HBAR$PR_SHIFT_OUT(\
@@ -256,50 +264,16 @@ source /home/hermans/anaconda3/etc/profile.d/conda.sh
 
 ################## Useful stuff :D ########################
 
-# Virtual env
-function my_fetchit {
-    command -v curl > /dev/null 2>&1
-    if [ $? = 0 ] ; then
-	curl $1 > `basename $1`
-    else
-	wget $1
-    fi
-}
-
-# Call like my_mkenv env-name [python-executable] [--sys]
-function my_mkenv {
-
-    opts=""
-    name=${1:-"env"}
-    if [ "$2" = "--sys" ]; then opts="--system-site-packages"; shift; fi
-    py=${2:-"python"}
-    if [ "$3" = "--sys" ]; then opts="--system-site-packages"; fi
-
-    version="15.0.1"
-
-    my_fetchit https://pypi.python.org/packages/source/v/virtualenv/virtualenv-$version.tar.gz || return 1
-    tar xzC /tmp < virtualenv-$version.tar.gz || return 1
-    # TODO: make sys an option.
-    $py /tmp/virtualenv-$version/virtualenv.py $opts $name || return 1
-    echo $py /tmp/virtualenv-$version/virtualenv.py $opts $name || return 1
-    rm -Rf "/tmp/virtualenv-$version" || return 1
-    rm -Rf "virtualenv-$version.tar.gz" || return 1
-    . $name/bin/activate
-}
-
-alias mkenv=my_mkenv
-
 #For getting a nice prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+[ -f ~/anaconda3/bin/conda ] && ~/anaconda3/bin/conda config --set changeps1 False
 
-# Used to darken the backlight beyond the minimum value. 
+# Used to darken the backlight beyond the minimum value.
 function nightmode {
   sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
   echo ${1:-"30"} > /sys/class/backlight/intel_backlight/brightness
   sudo chmod o-w /sys/class/backlight/intel_backlight/brightness
 }
-
-
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
