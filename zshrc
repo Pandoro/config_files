@@ -275,6 +275,10 @@ source /home/hermans/anaconda3/etc/profile.d/conda.sh
 
 # Rovina catkin
 #[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
+#export ROVINA_DEV=/data/work/Rovina/new_catkin/src/rovina-dev
+
+# Strands catkin
+#[ -f /data/work/strands/catkin_ws/devel/setup.zsh ] && source /data/work/strands/catkin_ws/devel/setup.zsh
 
 
 ################## Useful stuff :D ########################
