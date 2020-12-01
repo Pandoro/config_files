@@ -18,6 +18,7 @@ wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/Deja
 fc-cache -f ~/.fonts
 
 # Configure terminator with the font and set it as default
+mkdir -p ~/.config/terminator
 ln -s -f $(readlink -en $(dirname $0)/terminator_config) ~/.config/terminator/config
 gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
 

@@ -46,6 +46,8 @@ alias matlab=/opt/matlab.2016b/bin/matlab
 alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
 alias sq="squeue -a -S -T --format=\"%.6i %.10j %.14u %.6b %.6C %.12m %.12M %.12l %.10N %.15P %.10T\""
 
+alias phd="cd /data/work/phdthesis"
+
 # ZSH settings
 setopt nohup
 setopt autocd
@@ -238,6 +240,8 @@ export LC_ALL="en_US.utf8"
 
 
 ############ Work stuff ############
+
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 #cuda stuff
@@ -250,7 +254,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.0/extras/CUPTI/lib64
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-9.0/lib64
 export CPATH=$CPATH:/usr/local/cuda-9.0/lib64
 
-
 #cudnn from home
 #export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
 #export CPATH=~/cudnn/cudnn6.0/include:$CPATH
@@ -262,19 +265,28 @@ export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
 # Setup Conda
 source /home/hermans/anaconda3/etc/profile.d/conda.sh
 
+# Ros Hydro
+#[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
+
+# Ros Indigo
+#[ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
+
+# Ros Catkin ws.
+#[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
+
+# Rovina catkin
+#[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
+#export ROVINA_DEV=/data/work/Rovina/new_catkin/src/rovina-dev
+
+# Strands catkin
+#[ -f /data/work/strands/catkin_ws/devel/setup.zsh ] && source /data/work/strands/catkin_ws/devel/setup.zsh
+
 
 ################## Useful stuff :D ########################
 
 #For getting a nice prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 [ -f ~/anaconda3/bin/conda ] && ~/anaconda3/bin/conda config --set changeps1 False
-
-# Used to darken the backlight beyond the minimum value.
-function nightmode {
-  sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
-  echo ${1:-"30"} > /sys/class/backlight/intel_backlight/brightness
-  sudo chmod o-w /sys/class/backlight/intel_backlight/brightness
-}
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
@@ -319,6 +331,4 @@ fi
 # For jumping over words with control
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
-
-
 
