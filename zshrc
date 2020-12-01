@@ -44,6 +44,7 @@ alias screen="screen -U -l"
 alias calc="bc -l <<<"
 alias matlab=/opt/matlab.2016b/bin/matlab
 alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
+alias sq="squeue -a -S -T --format=\"%.6i %.10j %.14u %.6b %.6C %.12m %.12M %.12l %.10N %.15P %.10T\""
 
 # ZSH settings
 setopt nohup
@@ -314,5 +315,10 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
+
+# For jumping over words with control
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 
 
