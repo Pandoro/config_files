@@ -45,6 +45,8 @@ alias calc="bc -l <<<"
 alias matlab=/opt/matlab.2016b/bin/matlab
 alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
 
+alias phd="cd /data/work/phdthesis"
+
 # ZSH settings
 setopt nohup
 setopt autocd
