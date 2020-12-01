@@ -263,7 +263,7 @@ export CPATH=~/cudnn/cudnn7.0/include:$CPATH
 export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
 
 # Setup Conda
-source /home/hermans/anaconda3/etc/profile.d/conda.sh
+[ -f /home/hermans/anaconda3/etc/profile.d/conda.sh ] && source /home/hermans/anaconda3/etc/profile.d/conda.sh
 
 # Ros Hydro
 #[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
