@@ -90,16 +90,6 @@ function web ()   { "${BROWSER}" "http://yubnub.org/parser/parse?command=${*}" }
 function pmem ()  { ps -o rss,comm -p `pgrep "$1"` }
 function dsync () { rsync -lprt --progress --stats --delete "$1/" "$2/" }
 
-function snap () {
-    [ "$2" ] && tmout="$2"  || tmout=5
-    [ "$3" ] && format="$3" || format=png
-    fname="${HOME}/$1-`date +%d%m%y-%H%M`"
-    for ((i=${tmout}; i>=1; i--)) do; echo -n "${i}.. "; sleep 1; done
-    import -window root -quality 100 "${fname}.${format}"
-    convert -resize "15%" "${fname}.${format}" "${fname}.th.${format}"
-    echo ": ${fname}.${format}"
-}
-
 function extract () {
     if [[ -f "$1" ]]; then
         case "$1" in
