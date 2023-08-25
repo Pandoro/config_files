@@ -28,3 +28,7 @@ git config --global core.excludesfile ~/.gitignore_global
 git config --global user.name "Alexander Hermans"
 git config --global user.email "Alexander.Hermans0@gmail.com"
 git config --global push.default "matching"
+
+# Install fuzzy finder
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install

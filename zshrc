@@ -331,3 +331,7 @@ function start_conda {
 
 # umask to create files in a safer way than the ubuntu default
 umask 0077
+
+# Activate fuzzy finder if available
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
