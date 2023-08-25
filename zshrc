@@ -12,9 +12,6 @@ export VIEWER="xpdf"
 export BROWSER="firefox"
 export XTERM="urxvt"
 
-#  Dircolors Disabled for now. But maybe later?
-#eval `dircolors -b "${HOME}/.dir_colors"`
-
 # Manual pages
 # - colorize, since man-db fails to do so
 export LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
@@ -33,20 +30,14 @@ alias ...="cd ../.."
 alias ls="ls -aF --color=always"
 alias ll="ls -l"
 alias grep="grep --color=always"
-#alias cp="cp -ia"
 alias mv="mv -i"
 alias rm="rm -i"
 alias top="htop"
 alias df="df -hT"
 alias du="du -hc"
 alias su="su - "
-alias screen="screen -U -l"
 alias calc="bc -l <<<"
-alias matlab=/opt/matlab.2016b/bin/matlab
-alias pcl_viewer="pcl_viewer -bc 0.5,0.5,0.5"
-alias sq="squeue -a -S -T --format=\"%.6i %.10j %.14u %.6b %.6C %.12m %.12M %.12l %.10N %.15P %.10T\""
-
-alias phd="cd /data/work/phdthesis"
+alias sq="squeue -a -S -T --format=\"%.6i %.10j %.14u %.10b %.6C %.12m %.12M %.12l %.10N %.15P %.10T\""
 
 # ZSH settings
 setopt nohup
@@ -86,8 +77,6 @@ zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}
 
 
 # {{{ Functions
-function pmem ()  { ps -o rss,comm -p `pgrep "$1"` }
-
 function extract () {
     if [[ -f "$1" ]]; then
         case "$1" in
@@ -220,16 +209,13 @@ $PR_GREEN$PR_SHIFT_IN$PR_LLCORNER$PR_GREEN$PR_HBAR$PR_SHIFT_OUT(\
 setprompt
 # }}}
 # }}}
-#
 
-# Whut is this ^^?
-export ALTERNATE_EDITOR=""
+
+# Set the language to a reasonable default.
 export LC_ALL="en_US.utf8"
 
 
-############ Work stuff ############
-
-
+############ Work specific stuff ############
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 #cuda stuff
@@ -237,27 +223,30 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/extras/CUPTI/lib64
 #export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-8.0/lib64
 #export CPATH=$CPATH:/usr/local/cuda-8.0/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.0/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.0/extras/CUPTI/lib64
-export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-9.0/lib64
-export CPATH=$CPATH:/usr/local/cuda-9.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/extras/CUPTI/lib64
+#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-11.0/lib64
+#export CPATH=$CPATH:/usr/local/cuda-11.0/lib64
 
 #cudnn from home
 #export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
 #export CPATH=~/cudnn/cudnn6.0/include:$CPATH
 #export LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LIBRARY_PATH
-export LD_LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LD_LIBRARY_PATH
-export CPATH=~/cudnn/cudnn7.0/include:$CPATH
-export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
+#export LD_LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LD_LIBRARY_PATH
+#export CPATH=~/cudnn/cudnn7.0/include:$CPATH
+#export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
 
 # Setup Conda
-source /home/hermans/anaconda3/etc/profile.d/conda.sh
+# source /home/hermans/anaconda3/etc/profile.d/conda.sh  # commented out by conda initialize
 
 # Ros Hydro
 #[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
 
 # Ros Indigo
 #[ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
+
+# Ros Melodic
+[ -f /opt/ros/melodic/setup.zsh ] && source /opt/ros/melodic/setup.zsh
 
 # Ros Catkin ws.
 #[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
@@ -281,7 +270,6 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 typeset -A key
 
 key[Home]=${terminfo[khome]}
-
 key[End]=${terminfo[kend]}
 key[Insert]=${terminfo[kich1]}
 key[Delete]=${terminfo[kdch1]}
@@ -320,3 +308,26 @@ fi
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+#__conda_setup="$('/home/hermans/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+#    eval "$__conda_setup"
+#else
+#    if [ -f "/home/hermans/anaconda3/etc/profile.d/conda.sh" ]; then
+#        . "/home/hermans/anaconda3/etc/profile.d/conda.sh"
+#    else
+#        export PATH="/home/hermans/anaconda3/bin:$PATH"
+#    fi
+#fi
+#unset __conda_setup
+# <<< conda initialize <<<
+function start_conda {
+    [ -d /home/hermans/anaconda3 ] && eval "$(/home/hermans/anaconda3/bin/conda shell.zsh hook)"
+}
+
+# Make sure the module load stuff works in on lab machines
+[ -f /usr/share/modules/init/zsh ] && source /usr/share/modules/init/zsh
+
+# umask to create files in a safer way than the ubuntu default
+umask 0077
