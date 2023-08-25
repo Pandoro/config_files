@@ -101,6 +101,13 @@ function extract () {
     fi
 }
 
+# Small util to open a pdf remotly to allow easy printing
+function remote_pdf () {
+    TMP_FN=$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c20)
+    scp "$1" einhorn:/tmp/$TMP_FN
+    ssh einhorn okular /tmp/$TMP_FN
+}
+
 # {{{ Terminal and prompt
 function precmd {
     # Terminal width = width - 1 (for lineup)
