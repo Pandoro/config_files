@@ -236,8 +236,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 #export CPATH=~/cudnn/cudnn7.0/include:$CPATH
 #export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
 
-# Setup Conda
-# source /home/hermans/anaconda3/etc/profile.d/conda.sh  # commented out by conda initialize
 
 # Ros Hydro
 #[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
@@ -308,6 +306,8 @@ fi
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+
+# Setup conda, but don't always source it to keep starting the shell a bit faster.
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 #__conda_setup="$('/home/hermans/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
