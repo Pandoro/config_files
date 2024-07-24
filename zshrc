@@ -1,16 +1,7 @@
 # Environment
-#export TERM="rxvt"
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
-export LESSHISTFILE="-"
-export PAGER="less"
-export READNULLCMD="${PAGER}"
-export VISUAL="vim"
-export EDITOR="${VISUAL}"
-export VIEWER="xpdf"
-export BROWSER="firefox"
-export XTERM="urxvt"
 
 # Manual pages
 # - colorize, since man-db fails to do so
@@ -224,44 +215,6 @@ export LC_ALL="en_US.UTF-8"
 
 ############ Work specific stuff ############
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
-#cuda stuff
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/extras/CUPTI/lib64
-#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-8.0/lib64
-#export CPATH=$CPATH:/usr/local/cuda-8.0/lib64
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/lib64
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/extras/CUPTI/lib64
-#export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda-11.0/lib64
-#export CPATH=$CPATH:/usr/local/cuda-11.0/lib64
-
-#cudnn from home
-#export LD_LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LD_LIBRARY_PATH
-#export CPATH=~/cudnn/cudnn6.0/include:$CPATH
-#export LIBRARY_PATH=~/cudnn/cudnn6.0/lib64:$LIBRARY_PATH
-#export LD_LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LD_LIBRARY_PATH
-#export CPATH=~/cudnn/cudnn7.0/include:$CPATH
-#export LIBRARY_PATH=~/cudnn/cudnn7.0/lib64:$LIBRARY_PATH
-
-
-# Ros Hydro
-#[ -f /opt/ros/hydro/setup.zsh ] && source /opt/ros/hydro/setup.zsh
-
-# Ros Indigo
-#[ -f /opt/ros/indigo/setup.zsh ] && source /opt/ros/indigo/setup.zsh
-
-# Ros Melodic
-[ -f /opt/ros/melodic/setup.zsh ] && source /opt/ros/melodic/setup.zsh
-
-# Ros Catkin ws.
-#[ -f ~/catkin_ws/devel/setup.zsh ] && source ~/catkin_ws/devel/setup.zsh
-
-# Rovina catkin
-#[ -f /data/work/Rovina/new_catkin/devel/setup.zsh ] && source /data/work/Rovina/new_catkin/devel/setup.zsh
-#export ROVINA_DEV=/data/work/Rovina/new_catkin/src/rovina-dev
-
-# Strands catkin
-#[ -f /data/work/strands/catkin_ws/devel/setup.zsh ] && source /data/work/strands/catkin_ws/devel/setup.zsh
 
 
 ################## Useful stuff :D ########################
