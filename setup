@@ -1,34 +1,93 @@
 #!/bin/zsh
 
-# Link to the zsh config
-ln -s -f $(readlink -en $(dirname $0)/zshrc) ~/.zshrc
+# Functions for Linux specific tasks
+setup_linux() {
+    # Link to the zsh config
+    ln -s -f $(readlink -en $(dirname $0)/zshrc) ~/.zshrc
 
-# Link to the vim config
-ln -s -f $(readlink -en $(dirname $0)/vimrc) ~/.vimrc
+    # Link to the vim config
+    ln -s -f $(readlink -en $(dirname $0)/vimrc) ~/.vimrc
 
-# Install Vundle and all plugins
-[ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+    # Install Vundle and all plugins
+    [ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
 
-# Download a font needed for airline.
-mkdir -p ~/.fonts
-wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' \
-    -O ~/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.ttf
-fc-cache -f ~/.fonts
+    # Download a font needed for airline
+    mkdir -p ~/.fonts
+    wget 'https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' \
+        -O ~/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.ttf
+    fc-cache -f ~/.fonts
 
-# Configure terminator with the font and set it as default
-mkdir -p ~/.config/terminator
-ln -s -f $(readlink -en $(dirname $0)/terminator_config) ~/.config/terminator/config
-gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
+    # Configure terminator with the font and set it as default
+    mkdir -p ~/.config/terminator
+    ln -s -f $(readlink -en $(dirname $0)/terminator_config) ~/.config/terminator/config
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
+ß
+    # Install fuzzy finder
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+}
 
-# Setup some git defaults
-ln -s -f $(readlink -en $(dirname $0)/gitignore_global) ~/.gitignore_global
-git config --global core.excludesfile ~/.gitignore_global
-git config --global user.name "Alexander Hermans"
-git config --global user.email "Alexander.Hermans0@gmail.com"
-git config --global push.default "matching"
+# Functions for Mac specific tasks
+setup_mac() {
+    # Link to the zsh config
+    ln -s -f $(readlink -f $(dirname $0)/zshrc) ~/.zshrc
 
-# Install fuzzy finder
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+    # Link to the vim config
+    ln -s -f $(readlink -f $(dirname $0)/vimrc) ~/.vimrc
+
+    # Install Vundle and all plugins
+    [ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
+
+    # Download a font needed for airline
+    mkdir -p ~/Library/Fonts
+    curl -L 'https://github.com/supermarin/powerline-fonts/raw/master/Monaco/Monaco%20for%20Powerline.otf' \
+         -o ~/Library/Fonts/Monaco\ for\ Powerline.otf
+    fc-cache -f ~/Library/Fonts
+
+    # Install Homebrew if not already installed
+    if ! command -v brew &>/dev/null; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    # Configure iTerm2 with the font and set it as default (if using iTerm2)
+    if ! brew list | (grep -q iterm2; ret=$?; cat >/dev/null; exit $ret); then
+        brew install --cask iterm2
+    fi
+    defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iterm2"
+    defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+    mkdir -p ~/.iterm2
+    ln -s -f $(readlink -f $(dirname $0)/com.googlecode.iterm2.plist) ~/.iterm2/com.googlecode.iterm2.plist
+
+    # Install fuzzy finder
+    if ! brew list | (grep -q fzf; ret=$?; cat >/dev/null; exit $ret); then
+        brew install fzf
+        $(brew --prefix)/opt/fzf/install
+    fi
+}
+
+# Common setup for both Linux and macOS
+common_setup() {
+    # Setup some git defaults
+    ln -s -f $(readlink -f $(dirname $0)/gitignore_global) ~/.gitignore_global
+    git config --global core.excludesfile ~/.gitignore_global
+    git config --global user.name "Alexander Hermans"
+    git config --global user.email "Alexander.Hermans0@gmail.com"
+    git config --global push.default "matching"
+}
+
+# Detect OS
+OS=$(uname)
+
+# Run OS-specific setup
+if [ "$OS" = "Linux" ]; then
+    setup_linux
+elif [ "$OS" = "Darwin" ]; then
+    setup_mac
+fi
+
+# Finish by running the common setup
+common_setup
