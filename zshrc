@@ -219,7 +219,7 @@ setprompt
 
 
 # Set the language to a reasonable default.
-export LC_ALL="en_US.utf8"
+export LC_ALL="en_US.UTF-8"
 
 
 ############ Work specific stuff ############
