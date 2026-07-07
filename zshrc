@@ -15,7 +15,7 @@ export LESS_TERMCAP_us=$'\E[1;32m'    # begin underline
 
 
 # Aliases
-alias open="xdg-open"
+#alias open="xdg-open"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ls="ls -aF --color=always"
@@ -94,7 +94,7 @@ function extract () {
 
 # Small util to open a pdf remotly to allow easy printing
 function remote_pdf () {
-    TMP_FN=$(cat /dev/urandom | tr -dc '0-9a-zA-Z' | head -c20)
+    TMP_FN=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c20)
     scp "$1" einhorn:/tmp/$TMP_FN
     ssh einhorn okular /tmp/$TMP_FN
 }
@@ -295,3 +295,12 @@ umask 0077
 # Activate fuzzy finder if available
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Created by `pipx` on 2025-07-28 13:36:24
+export PATH="$PATH:/Users/hermans/.local/bin"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/hermans/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hermans/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/hermans/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hermans/google-cloud-sdk/completion.zsh.inc'; fi

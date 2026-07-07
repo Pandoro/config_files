@@ -1,3 +1,8 @@
 *~
 slurm*.out
 .DS_Store
+
+# VSCode/Cursor config files
+.vscode
+
+tmp/*
