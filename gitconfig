@@ -1,0 +1,12 @@
+[core]
+	excludesfile = ~/.gitignore_global
+[user]
+	name = Alexander Hermans
+	email = Alexander.Hermans0@gmail.com
+[push]
+	default = simple
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

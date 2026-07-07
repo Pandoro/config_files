@@ -67,16 +67,25 @@ setup_mac() {
         brew install fzf
         $(brew --prefix)/opt/fzf/install
     fi
+
+    # Link Karabiner-Elements key mappings
+    mkdir -p ~/.config/karabiner
+    ln -s -f $(readlink -f $(dirname $0)/karabiner.json) ~/.config/karabiner/karabiner.json
+
+    # Import Rectangle window-management preferences
+    defaults import com.knollsoft.Rectangle $(readlink -f $(dirname $0)/rectangle.plist)
+
+    # Import Stats menu-bar preferences
+    defaults import eu.exelban.Stats $(readlink -f $(dirname $0)/stats.plist)
 }
 
 # Common setup for both Linux and macOS
 common_setup() {
-    # Setup some git defaults
+    # Link the global git ignore file
     ln -s -f $(readlink -f $(dirname $0)/gitignore_global) ~/.gitignore_global
-    git config --global core.excludesfile ~/.gitignore_global
-    git config --global user.name "Alexander Hermans"
-    git config --global user.email "Alexander.Hermans0@gmail.com"
-    git config --global push.default "matching"
+
+    # Link the global git config (name, email, excludes, LFS, push defaults)
+    ln -s -f $(readlink -f $(dirname $0)/gitconfig) ~/.gitconfig
 }
 
 # Detect OS
